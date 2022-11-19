@@ -1,5 +1,8 @@
+using JetBrains.Annotations;
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Player : MonoBehaviour
@@ -16,10 +19,14 @@ public class Player : MonoBehaviour
     [Range(-2f, 2f)] public float checkGroundOffsetY = -1.1f;
     [Range(-2f, 2f)] public float checkGroundRadius = 0.3f;
     public Animator animator;
+    float SX, SY;
+    [SerializeField] private float damge;
 
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        SX = transform.position.x;
+        SY = transform.position.y;
     }
 
     
@@ -74,6 +81,14 @@ public class Player : MonoBehaviour
         else
         {
             isGrounded = false;
+        }
+        
+    }
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.name == "Dead&ReturnZone")
+        {
+            transform.position = new Vector3(SX, SY, transform.position.z);
         }
     }
 }
