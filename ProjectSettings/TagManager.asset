@@ -8,6 +8,8 @@ TagManager:
   - goldcoin
   - Coin
   - Coins
+  - bullet
+  - Crab
   layers:
   - Default
   - TransparentFX
