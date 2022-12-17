@@ -8,6 +8,7 @@ public class Platform : MonoBehaviour
     public float speed = 1f;
     public Transform startPos;
     Vector3 nextPos;
+    
     void Start()
     {
         nextPos = startPos.position;
@@ -23,6 +24,8 @@ public class Platform : MonoBehaviour
         if (transform.position == pos2.position)
         {
             nextPos = pos1.position;
+            
+
         }
     }
     private void OnDrawGizmos()

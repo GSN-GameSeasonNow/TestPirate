@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Player : MonoBehaviour
 {
@@ -19,21 +20,44 @@ public class Player : MonoBehaviour
     [Range(-2f, 2f)] public float checkGroundOffsetY = -1.1f;
     [Range(-2f, 2f)] public float checkGroundRadius = 0.3f;
     public Animator animator;
-    float SX, SY;
+    public Animator Campfire;
+    [Header("Audio")]
+    [SerializeField] private AudioSource stepAudio;
+    public AudioSource jumpAudio;
+    public AudioSource FireAudio;
+    //float SX, SY;
+    new Vector3 respawn;
+    public GameObject checkPoint;
     [SerializeField] private float damge;
+    
 
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
-        SX = transform.position.x;
-        SY = transform.position.y;
+        Campfire.enabled = false;
+        //SX = transform.position.x;
+        //SY = transform.position.y;
+        respawn = transform.position;
+        //checkPoint.SetActive(false);
+        checkPoint.SetActive(false);
     }
+    
+
+    
 
     
     void Update()
     {
         horizontalMove = Input.GetAxisRaw("Horizontal") * speed;
         animator.SetFloat("horizontal", Mathf.Abs(horizontalMove));
+        if(Input.GetButtonDown("Horizontal"))
+        {
+            stepAudio.Play();
+        }
+        if (Input.GetButtonUp("Horizontal"))
+        {
+            stepAudio.Stop();
+        }
         if (horizontalMove < 0 && facingRight)
         {
             Flip();
@@ -45,10 +69,13 @@ public class Player : MonoBehaviour
         if(isGrounded && Input.GetKey(KeyCode.Space))
         {
             rb.AddForce(transform.up * jumpForce, ForceMode2D.Impulse);
+            stepAudio.Stop();
+            jumpAudio.Play();
         }
         if(isGrounded == false)
         {
             animator.SetBool("jump", true);
+            
         }
         else
         {
@@ -66,9 +93,10 @@ public class Player : MonoBehaviour
     private void Flip()
     {
         facingRight = !facingRight;
-        Vector3 theScale = transform.localScale;
-        theScale.x *= -1;
-        transform.localScale=theScale;
+        //Vector3 theScale = transform.localScale;
+        //theScale.x *= -1;
+        //transform.localScale=theScale;
+        transform.Rotate(0f, 180f, 0f);
     }
 
     private void CheckGround()
@@ -88,7 +116,21 @@ public class Player : MonoBehaviour
     {
         if (collision.gameObject.name == "Dead&ReturnZone")
         {
-            transform.position = new Vector3(SX, SY, transform.position.z);
+            //transform.position = new Vector3(SX, SY, transform.position.z);
+            transform.position = respawn;
         }
+        else if(collision.gameObject.tag == "CheckPoint")
+        {
+            FireAudio.Play();
+            checkPoint.SetActive(true);
+            respawn = transform.position;
+            //Campfire.enabled = true;
+        }
+    }
+
+    public void OnTriggerExit2D(Collider2D collision)
+    {
+        checkPoint.SetActive(false);
+        //FireAudio.enabled = false;
     }
 }

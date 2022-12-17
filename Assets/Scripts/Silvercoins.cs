@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Silvercoins : MonoBehaviour
 {
+    public AudioSource SilverCoin;
     // Start is called before the first frame update
     void Start()
     {
@@ -20,8 +21,9 @@ public class Silvercoins : MonoBehaviour
     {
         if (collision.CompareTag("Player"))
         {
+            SilverCoin.Play();
             SilverText.Coins++;
-            Destroy(gameObject);
+            Destroy(gameObject,0.25f);
         }
     }
 }

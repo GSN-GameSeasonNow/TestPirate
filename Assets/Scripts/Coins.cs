@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Coins : MonoBehaviour
 {
+    public AudioSource coin;
     // Start is called before the first frame update
     void Start()
     {
@@ -20,8 +21,9 @@ public class Coins : MonoBehaviour
     {
         if(collision.CompareTag("Player"))
         {
+            coin.Play();
             MoneyText.Coin++;
-            Destroy(gameObject);
+            Destroy(gameObject,0.25f);
         }
     }
 }
