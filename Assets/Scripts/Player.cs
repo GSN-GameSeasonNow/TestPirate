@@ -10,6 +10,8 @@ public class Player : MonoBehaviour
 {
     private Rigidbody2D rb;
     private float horizontalMove = 0f;
+    public GameObject egg;
+    [SerializeField] private float damge;
     [Header("Speed")]
     [Range(0, 15f)] public float speed = 1f;
     private bool facingRight = true;
@@ -24,11 +26,13 @@ public class Player : MonoBehaviour
     [Header("Audio")]
     [SerializeField] private AudioSource stepAudio;
     public AudioSource jumpAudio;
-    public AudioSource FireAudio;
     //float SX, SY;
     new Vector3 respawn;
     public GameObject checkPoint;
-    [SerializeField] private float damge;
+    public KeyCode activateKey1 = KeyCode.G;
+    public KeyCode activateKey2 = KeyCode.S;
+    public KeyCode activateKey3 = KeyCode.N;
+    
     
 
     void Start()
@@ -81,6 +85,12 @@ public class Player : MonoBehaviour
         {
             animator.SetBool("jump", false);
         }
+
+        if (Input.GetKeyDown(activateKey1) & Input.GetKeyDown(activateKey2) & Input.GetKeyDown(activateKey3))
+        {
+            egg.SetActive(true);
+            Cursor.visible = true;
+        }
     }
 
     private void FixedUpdate()
@@ -121,10 +131,10 @@ public class Player : MonoBehaviour
         }
         else if(collision.gameObject.tag == "CheckPoint")
         {
-            FireAudio.Play();
+            
             checkPoint.SetActive(true);
             respawn = transform.position;
-            //Campfire.enabled = true;
+            Campfire.enabled = true;
         }
     }
 
@@ -132,5 +142,6 @@ public class Player : MonoBehaviour
     {
         checkPoint.SetActive(false);
         //FireAudio.enabled = false;
+        
     }
 }
