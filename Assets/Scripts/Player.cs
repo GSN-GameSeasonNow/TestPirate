@@ -25,10 +25,13 @@ public class Player : MonoBehaviour
     public Animator Campfire;
     [Header("Audio")]
     [SerializeField] private AudioSource stepAudio;
+    public GameObject greenBotle;
     public AudioSource jumpAudio;
+    
     //float SX, SY;
     new Vector3 respawn;
     public GameObject checkPoint;
+    
     public KeyCode activateKey1 = KeyCode.G;
     public KeyCode activateKey2 = KeyCode.S;
     public KeyCode activateKey3 = KeyCode.N;
@@ -52,7 +55,7 @@ public class Player : MonoBehaviour
     
     void Update()
     {
-        horizontalMove = Input.GetAxisRaw("Horizontal") * speed;
+        Speed(1);
         animator.SetFloat("horizontal", Mathf.Abs(horizontalMove));
         if(Input.GetButtonDown("Horizontal"))
         {
@@ -91,6 +94,19 @@ public class Player : MonoBehaviour
             egg.SetActive(true);
             Cursor.visible = true;
         }
+        StartCoroutine("returnSpeed");
+    }
+    IEnumerator returnSpeed()
+    {
+        if (speed == 5)
+        {
+            yield return new WaitForSeconds(5f);
+            speed = 2;
+        }
+    }
+    public void Speed(int n)
+    {
+        horizontalMove = Input.GetAxisRaw("Horizontal") * speed * n;
     }
 
     private void FixedUpdate()
@@ -135,6 +151,11 @@ public class Player : MonoBehaviour
             checkPoint.SetActive(true);
             respawn = transform.position;
             Campfire.enabled = true;
+        }
+        else if (collision.gameObject.tag == "xSpeed")
+        {
+            speed = 5;
+            Destroy(greenBotle,0.15f);
         }
     }
 

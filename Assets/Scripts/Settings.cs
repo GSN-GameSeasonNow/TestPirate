@@ -24,8 +24,8 @@ public class Settings : MonoBehaviour
 
     public void SetFullscreen(bool isFullscreen)
     {
-        //Screen.fullScreen = isFullscreen;
-        Application.OpenURL("https://www.youtube.com/watch?v=G1IbRujko-A&t=66s&ab_channel=10Hours");
+        Screen.fullScreen = isFullscreen;
+        //Application.OpenURL("https://www.youtube.com/watch?v=G1IbRujko-A&t=66s&ab_channel=10Hours");
     }
 
 

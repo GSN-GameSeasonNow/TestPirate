@@ -11,6 +11,8 @@ TagManager:
   - bullet
   - Crab
   - CheckPoint
+  - xSpeed
+  - Spikes
   layers:
   - Default
   - TransparentFX
