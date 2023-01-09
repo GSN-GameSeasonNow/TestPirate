@@ -13,6 +13,7 @@ TagManager:
   - CheckPoint
   - xSpeed
   - Spikes
+  - Exit_Trigger
   layers:
   - Default
   - TransparentFX

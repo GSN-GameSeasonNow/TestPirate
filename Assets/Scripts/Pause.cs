@@ -7,6 +7,7 @@ public class Pause : MonoBehaviour
 {
     public GameObject PanelPause;
     [SerializeField] KeyCode keyMenu;
+    public GameObject dialog;
     bool isPanel;
 
     void Start()
@@ -31,6 +32,7 @@ public class Pause : MonoBehaviour
         {
             PanelPause.SetActive(true);
             Cursor.visible = true;
+            dialog.SetActive(false);
             Time.timeScale = 0f;
         }
         else

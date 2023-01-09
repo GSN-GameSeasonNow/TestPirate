@@ -5,7 +5,8 @@ using UnityEngine;
 public class Lovushka : MonoBehaviour
 {
     Rigidbody2D rb;
-    public GameObject trigger;
+    //public GameObject trigger;
+    //[SerializeField] Health damage;
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -16,7 +17,7 @@ public class Lovushka : MonoBehaviour
         if (collision.gameObject.name.Equals("player"))
         {
             rb.isKinematic = false;
-            trigger.SetActive(false);
+            //trigger.SetActive(false);
         }
     }
 }

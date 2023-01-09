@@ -2,7 +2,6 @@ using JetBrains.Annotations;
 using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -11,7 +10,12 @@ public class Player : MonoBehaviour
     private Rigidbody2D rb;
     private float horizontalMove = 0f;
     public GameObject egg;
+    public GameObject dialog;
+    public GameObject bossCrab;
+    public GameObject bg;
+    public GameObject block;
     [SerializeField] private float damge;
+    [SerializeField] private Health health;
     [Header("Speed")]
     [Range(0, 15f)] public float speed = 1f;
     private bool facingRight = true;
@@ -26,6 +30,7 @@ public class Player : MonoBehaviour
     [Header("Audio")]
     [SerializeField] private AudioSource stepAudio;
     public GameObject greenBotle;
+    public AudioSource oST;
     public AudioSource jumpAudio;
     
     //float SX, SY;
@@ -95,12 +100,13 @@ public class Player : MonoBehaviour
             Cursor.visible = true;
         }
         StartCoroutine("returnSpeed");
+        
     }
     IEnumerator returnSpeed()
     {
         if (speed == 5)
         {
-            yield return new WaitForSeconds(5f);
+            yield return new WaitForSeconds(25f);
             speed = 2;
         }
     }
@@ -157,12 +163,23 @@ public class Player : MonoBehaviour
             speed = 5;
             Destroy(greenBotle,0.15f);
         }
+        else if (collision.gameObject.tag == "Crab")
+        {
+            dialog.SetActive(true);
+            //Cursor.visible = true;
+        }
+        else if (collision.gameObject.tag == "Exit_Trigger")
+        {
+            oST.Stop();
+            bossCrab.SetActive(false);
+            bg.SetActive(false);
+            block.SetActive(true);
+        }
     }
-
     public void OnTriggerExit2D(Collider2D collision)
     {
         checkPoint.SetActive(false);
-        //FireAudio.enabled = false;
-        
+        dialog.SetActive(false);
+        //Cursor.visible = false;
     }
 }
