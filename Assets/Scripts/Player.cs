@@ -52,6 +52,9 @@ public class Player : MonoBehaviour
         respawn = transform.position;
         //checkPoint.SetActive(false);
         checkPoint.SetActive(false);
+        Debug.Log("Device Memory: " + SystemInfo.systemMemorySize + "MB");
+        Debug.Log("Processor: " + SystemInfo.processorType);
+        Debug.Log("Video Card: " + SystemInfo.graphicsDeviceName);
     }
     
 
@@ -166,7 +169,8 @@ public class Player : MonoBehaviour
         else if (collision.gameObject.tag == "Crab")
         {
             dialog.SetActive(true);
-            //Cursor.visible = true;
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
         }
         else if (collision.gameObject.tag == "Exit_Trigger")
         {
