@@ -14,6 +14,7 @@ public class Player : MonoBehaviour
     public GameObject bossCrab;
     public GameObject bg;
     public GameObject block;
+    public GameObject totem;
     [SerializeField] private float damge;
     [SerializeField] private Health health;
     [Header("Speed")]
@@ -32,7 +33,7 @@ public class Player : MonoBehaviour
     public GameObject greenBotle;
     public AudioSource oST;
     public AudioSource jumpAudio;
-    
+
     //float SX, SY;
     new Vector3 respawn;
     public GameObject checkPoint;
@@ -178,6 +179,10 @@ public class Player : MonoBehaviour
             bossCrab.SetActive(false);
             bg.SetActive(false);
             block.SetActive(true);
+        }
+        else if (collision.gameObject.tag == "Totem")
+        {
+            Destroy(totem);
         }
     }
     public void OnTriggerExit2D(Collider2D collision)

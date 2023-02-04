@@ -2,11 +2,22 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Audio;
+using UnityEngine.UI;
 
 public class Settings : MonoBehaviour
 {
     public AudioMixer audioMixer;
-    
+    public Text processorName;
+    public Text videoCardName;
+    public Text memoryCount;
+
+    void Start()
+    {
+        processorName.text = "Процессор:" + SystemInfo.processorType + "\n";
+        videoCardName.text = "Видеокарта:" + SystemInfo.graphicsDeviceName;
+        memoryCount.text = "Кол-во памяти: " + SystemInfo.systemMemorySize + "MB\n";
+    }
+
     public void SetVolume(float volume)
     {
         audioMixer.SetFloat("Mixer", Mathf.Log10(volume) * 20);
